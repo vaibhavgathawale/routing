@@ -1,0 +1,17 @@
+.bold-border {
+  border: 2px solid #7bc532f6;   /* bold black border */
+  border-radius: 6px;       /* optional: make corners rounded */
+}
+
+/* default style */
+.custom-input {
+  border: 2px solid #000;   /* bold black border */
+  transition: all 0.3s ease; /* smooth animation */
+}
+
+/* when user clicks / focuses */
+.custom-input:focus {
+  border-color: #28a745;    /* green border */
+  background-color: #f0fff4; /* light green background */
+  outline: none;             /* remove blue browser outline */
+}
