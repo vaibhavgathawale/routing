@@ -1,5 +1,22 @@
-<p>carthome works!</p>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark px-3">
+  <a class="navbar-brand fw-bold text-white" href="#">MyShop</a>
 
+  <div class="collapse navbar-collapse">
+    <ul class="navbar-nav me-auto"></ul>
+    <div class="d-flex align-items-center">
+      <a href="#" class="text-white position-relative me-3">
+        <i class="bi bi-cart4 fs-4"></i>
+        <!-- Cart Count Badge -->
+        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+          {{ cartCount }}
+        </span>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- Product Grid -->
 <div class="container py-4">
   <div class="row g-3">
 
@@ -18,9 +35,13 @@
           <!-- Product Info -->
           <div class="flex-grow-1">
             <h6 class="mb-1">
-              <a [href]="'/product/' + product.slug + '/' + product.id" class="text-dark">{{ product.name }}</a>
+              <a [href]="'/product/' + product.slug + '/' + product.id" class="text-dark">
+                {{ product.name }}
+              </a>
             </h6>
             <p class="mb-1 fw-500">₹{{ product.price }}</p>
+
+            <!-- Sizes -->
             <div class="d-flex align-items-center gap-2 mb-1">
               <span *ngFor="let size of product.sizes" class="btn btn-sm"
                     [ngClass]="{'btn-dark': size === product.selectedSize, 'btn-outline-dark': size !== product.selectedSize}"
@@ -28,13 +49,29 @@
                 {{ size }}
               </span>
             </div>
-            <button class="btn btn-dark btn-sm w-100" (click)="addToCart(product)">ADD TO CART</button>
-          </div>
 
+            <!-- Add to Cart OR Quantity Selector -->
+            <div *ngIf="!product.quantity || product.quantity === 0; else qtySelector">
+              <button class="btn btn-dark btn-sm w-100" (click)="addToCart(product)">
+                ADD TO CART
+              </button>
+            </div>
+
+            <!-- Quantity Selector -->
+            <ng-template #qtySelector>
+              <div class="d-flex align-items-center border rounded overflow-hidden">
+                <button class="btn btn-sm text-white" style="background:#2c003e"
+                        (click)="decreaseQty(product)">-</button>
+                <div class="px-3 fw-bold">{{ product.quantity }}</div>
+                <button class="btn btn-sm text-white" style="background:#2c003e"
+                        (click)="increaseQty(product)">+</button>
+              </div>
+            </ng-template>
+
+          </div>
         </div>
       </div>
     </div>
 
   </div>
 </div>
-

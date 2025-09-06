@@ -7,4 +7,6 @@ export interface Product {
   selectedSize: string;
   image: string;
   isNew?: boolean; // optional
+  quantity: number;
+
 }

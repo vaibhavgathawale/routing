@@ -18,7 +18,8 @@ export class Carthome implements OnInit {
 
   products: Product[] = [];
   loading = true;
-  
+    cartCount: number = 0;
+
 
   constructor(private productService: Productservice) {}
 
@@ -46,7 +47,21 @@ export class Carthome implements OnInit {
 
   addToCart(product: Product) {
     console.log('Added to cart:', product.name, 'Size:', product.selectedSize);
-    // Call your cart service here
+    if (!product.quantity || product.quantity === 0) {
+      product.quantity = 1;
+      this.cartCount++;
+    }
+  }
+  increaseQty(product: Product) {
+    product.quantity++;
+    this.cartCount++;
+  }
+
+  decreaseQty(product: Product) {
+    if (product.quantity > 0) {
+      product.quantity--;
+      this.cartCount--;
+    }
   }
 }
 
