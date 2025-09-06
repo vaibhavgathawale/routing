@@ -23,5 +23,9 @@ export class Home {
     this.router.navigate(['/Carousel']);
 
   }
+  CartHome(){
+        this.router.navigate(['/carthome']);
+
+  }
     
 }
