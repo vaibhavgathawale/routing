@@ -1,0 +1,88 @@
+/* Overall container padding */
+.container {
+  max-width: 1200px;
+}
+
+/* Product Card */
+.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: none; /* clean border */
+  background: #fff;
+}
+
+/* Hover effect */
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Product Image */
+.card img {
+  border-radius: 12px;
+  transition: transform 0.3s ease;
+}
+
+.card img:hover {
+  transform: scale(1.05);
+}
+
+/* Product Name */
+.card h6 a {
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.card h6 a:hover {
+  color: #ff4c3b; /* Attractive hover color */
+}
+
+/* Price */
+.card p {
+  color: #333;
+  font-weight: 500;
+}
+
+/* Sizes buttons */
+.btn-sm {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.btn-sm:hover {
+  transform: scale(1.1);
+}
+
+/* Add to Cart Button */
+.btn-dark {
+  background: linear-gradient(135deg, #222, #555);
+  border: none;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+}
+
+.btn-dark:hover {
+  background: linear-gradient(135deg, #ff4c3b, #ff784e);
+  box-shadow: 0 5px 15px rgba(255, 76, 59, 0.4);
+  transform: translateY(-2px);
+}
+
+/* Flex alignment for image and info */
+.d-flex.align-items-center {
+  gap: 15px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .flex-shrink-0 {
+    width: 60px !important;
+  }
+
+  .btn-sm {
+    font-size: 0.7rem;
+    padding: 0.2rem 0.5rem;
+  }
+}
