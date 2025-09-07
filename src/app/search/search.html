@@ -1,34 +1,35 @@
-<!-- <p>search works!</p>
-<div class="container-fluid">
-  <form class="d-flex mx-auto" style="width: 50%;" role="search">
-    <input class="form-control me-5 custom-input" 
-           type="search" 
-           placeholder="Search" 
-           aria-label="Search"/>
-    <button class="btn btn-outline-success" type="submit">Search</button>
-  </form>
-</div> -->
+
 <br>
 <br>
 
-<div class="container-fluid">
-  <form class="d-flex mx-auto" style="width: 50%;" (ngSubmit)="searchMatch()">
-    <input class="form-control me-2" 
-           type="search" 
-           placeholder="Search Match"
-           [(ngModel)]="query" 
-           name="query"
-           aria-label="Search"/>
-    <button class="btn btn-outline-success" type="submit">Search</button>
-  </form>
+<div class="container p-4">
+  <h2>Word Search</h2>
 
-  <!-- results -->
-  <div class="mt-3" *ngIf="matches.length > 0">
-    <h5>Results:</h5>
-    <ul class="list-group">
-      <li *ngFor="let match of matches" class="list-group-item">
-        {{ match.team1 }} vs {{ match.team2 }} - {{ match.date }}
-      </li>
+  <input type="text" [formControl]="searchControl" placeholder="Type a word..." class="form-control" />
+
+  @if (results.length > 0) {
+    <ul class="list-group mt-3">
+      @for (word of results; track word) {
+        <li class="list-group-item">
+          {{ word }}
+        </li>
+      }
     </ul>
-  </div>
+  }
 </div>
+
+<!-- <div class="container p-4">
+  <h2>Word Search</h2>
+
+  <input type="text" [formControl]="searchControl" placeholder="Type a word..." class="form-control" />
+
+  <ul class="list-group mt-3" *ngIf="results.length > 0">
+    <li *ngFor="let product of results" 
+        class="list-group-item">
+
+        <a [routerLink]="['/product', product.id]">{{ product.name }}</a>
+    </li>
+  </ul>
+</div> -->
+
+

@@ -7,7 +7,6 @@ bootstrapApplication(App, {
   ...appConfig,
   providers: [
     ...(appConfig.providers || []),
-    provideHttpClient(withInterceptorsFromDi())   // ✅ new way to provide HttpClient
+    provideHttpClient(withInterceptorsFromDi())   // ✅ Browser HttpClient
   ]
-})
-.catch((err) => console.error(err));
+}).catch((err) => console.error(err));
