@@ -5,37 +5,42 @@ import { FormControl,ReactiveFormsModule } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { Data } from '../service/data';
 import { Product } from '../models/Product.model';
+import { RouterModule } from '@angular/router';
+
 
 
 
 @Component({
   selector: 'app-search',
-  imports: [CommonModule, FormsModule,ReactiveFormsModule],
+  standalone: true,
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule],
   templateUrl: './search.html',
   styleUrl: './search.css'
   
 })
 export class Search {
  searchControl = new FormControl('');
-  results: string[] = [];
+  results: Product[] = [];
 
   constructor(private data: Data) {
     this.searchControl.valueChanges
-      .pipe(
-        debounceTime(300),               // wait for 300ms pause in typing
-        distinctUntilChanged(),          // only call API if value changed
-        switchMap(value => {
-          if (value && value.length >= 2) {
-            return this.data.searchWords(value);
-          } else {
-            this.results = [];
-            return [];
-          }
-        })
-      )
-      .subscribe((data: string[]) => {
-        this.results = data;
-      });
+  .pipe(
+    debounceTime(300),
+    distinctUntilChanged(),
+    switchMap(value => {
+      if (value && value.length >= 1) {
+        return this.data.searchWords(value);
+      } else {
+          this.results = [];
+        return [];
+      }
+    })
+  )
+  .subscribe({
+    next: (data: Product[]) => this.results = data,
+    error: (err) => console.error('Error fetching search results:', err)
+  });
+
   }
   }
 

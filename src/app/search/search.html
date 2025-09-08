@@ -2,21 +2,24 @@
 <br>
 <br>
 
-<div class="container p-4">
+<<div class="container p-4">
   <h2>Word Search</h2>
 
   <input type="text" [formControl]="searchControl" placeholder="Type a word..." class="form-control" />
 
   @if (results.length > 0) {
     <ul class="list-group mt-3">
-      @for (word of results; track word) {
+      @for (product of results; track product.id) {
         <li class="list-group-item">
-          {{ word }}
+          <a [routerLink]="['/product', product.id]">
+            {{ product.name }}
+          </a>
         </li>
       }
     </ul>
   }
 </div>
+
 
 <!-- <div class="container p-4">
   <h2>Word Search</h2>

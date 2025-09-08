@@ -2,6 +2,7 @@ import { Component,Injectable,OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Productservice } from '../service/productservice';
 import { Product } from '../models/Product.model';
+import { RouterModule } from '@angular/router';   // ✅ Import this
 
 
 
@@ -9,7 +10,7 @@ import { Product } from '../models/Product.model';
 @Component({
   selector: 'app-carthome',
   standalone: true,               // ✅ Needed for Angular 20 standalone component
-  imports: [CommonModule],
+  imports: [CommonModule,RouterModule],
   templateUrl: './carthome.html',
   styleUrl: './carthome.css'
 })

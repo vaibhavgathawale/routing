@@ -1,1 +1,44 @@
 <p>product-detail works!</p>
+
+
+@if (product) {
+  <div class="container mt-5">
+    <div class="row shadow-lg p-4 bg-white rounded">
+      
+      <!-- Product Image -->
+      <div class="col-md-6 text-center">
+        <img [src]="product.image" class="img-fluid rounded" alt="{{ product.name }}">
+      </div>
+
+      <!-- Product Info -->
+      <div class="col-md-6">
+        <h2 class="fw-bold mb-3">{{ product.name }}</h2>
+        
+        <div class="mb-3">
+          <span class="h4 text-success">₹{{ product.price }}</span>
+        </div>
+
+        <div class="mb-3">
+          <strong>Sizes: </strong>
+          <span class="badge bg-dark me-1" *ngFor="let size of product.sizes">{{ size }}</span>
+        </div>
+
+        <div class="mb-3">
+          <strong>Quantity:</strong> {{ product.quantity }}
+        </div>
+
+        <div class="mb-3">
+          <strong>Status:</strong>
+          <span [ngClass]="product.isNew ? 'text-success' : 'text-secondary'">
+            {{ product.isNew ? 'New Arrival' : 'Regular' }}
+          </span>
+        </div>
+
+        <button class="btn btn-dark btn-lg w-100">
+          <i class="bi bi-cart-plus"></i> Add to Cart
+        </button>
+      </div>
+    </div>
+  </div>
+}
+
