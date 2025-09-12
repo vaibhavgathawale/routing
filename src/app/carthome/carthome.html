@@ -7,10 +7,10 @@
     <div class="d-flex align-items-center">
       <a routerLink="#" class="text-white position-relative me-3">
         <i class="bi bi-cart4 fs-4"></i>
-        <!-- Cart Count Badge -->
-        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-          {{ cartCount }}
-        </span>
+       <!-- Cart Count Badge -->
+      <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger cart-badge">
+  {{ cartCount }}
+</span>
       </a>
     </div>
   </div>
@@ -50,7 +50,7 @@
               </span>
             </div>
 
-           <!-- Add to Cart OR Quantity Selector -->
+ <!-- Add to Cart OR Quantity Selector -->
 <div *ngIf="!product.quantity || product.quantity === 0; else qtySelector">
   <button class="btn btn-dark btn-sm w-100 stylish-btn" (click)="addToCart(product)">
     <i class="bi bi-cart-plus"></i> ADD TO CART
@@ -59,13 +59,12 @@
 
 <!-- Quantity Selector -->
 <ng-template #qtySelector>
-  <div class="quantity-box d-flex align-items-center justify-content-between">
+  <div class="quantity-controls d-flex align-items-center justify-content-between">
     <button class="qty-btn" (click)="decreaseQty(product)">−</button>
-    <span class="qty-value">{{ product.quantity }}</span>
+    <span class="qty-value mx-2">{{ product.quantity }}</span>
     <button class="qty-btn" (click)="increaseQty(product)">+</button>
   </div>
 </ng-template>
-
 
           </div>
         </div>
