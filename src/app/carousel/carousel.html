@@ -1,19 +1,24 @@
 <p>carousel works!</p>
 <h6>Hello Carousel</h6>
 
-<div id="carouselExample" class="carousel slide" data-bs-ride="carousel" data-bs-interval="1000">
+<div class="app-carousel" (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()">
   <div class="carousel-inner">
-    <div *ngFor="let img of images; let i = index" 
-         class="carousel-item" 
-         [class.active]="i === 0">
-      <img [src]="img" class="d-block w-100" alt="Slide {{i+1}}" height="400">
+    <div *ngFor="let img of images; let i = index"
+         class="carousel-item"
+         [class.active]="i === currentIndex"
+         [attr.aria-hidden]="i === currentIndex ? 'false' : 'true'">
+      <img [src]="img" [alt]="'Slide ' + (i + 1)" />
     </div>
   </div>
 
-  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon"></span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-    <span class="carousel-control-next-icon"></span>
-  </button>
+  <button class="carousel-control prev" type="button" (click)="prev()" aria-label="Previous slide">‹</button>
+  <button class="carousel-control next" type="button" (click)="next()" aria-label="Next slide">›</button>
+
+  <div class="indicators" role="tablist" aria-label="Carousel indicators">
+    <button *ngFor="let img of images; let i = index"
+            class="dot"
+            [class.active]="i === currentIndex"
+            (click)="goTo(i)"
+            [attr.aria-label]="'Go to slide ' + (i + 1)"></button>
+  </div>
 </div>

@@ -1,0 +1,79 @@
+.app-carousel {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+}
+
+.carousel-inner {
+  position: relative;
+  height: 420px; /* tweak to your design */
+}
+
+.carousel-item {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 600ms ease-in-out, transform 600ms ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none; /* prevent accidental clicks on hidden slides */
+}
+
+.carousel-item.active {
+  opacity: 1;
+  z-index: 2;
+  pointer-events: auto;
+}
+
+.carousel-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* controls */
+.carousel-control {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.45);
+  color: white;
+  border: none;
+  font-size: 28px;
+  padding: 8px 12px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 5;
+}
+
+.carousel-control.prev { left: 12px; }
+.carousel-control.next { right: 12px; }
+
+/* indicators */
+.indicators {
+  position: absolute;
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 6;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.6);
+  border: none;
+  cursor: pointer;
+}
+.dot.active {
+  background: white;
+  box-shadow: 0 0 0 3px rgba(255,255,255,0.08);
+}
