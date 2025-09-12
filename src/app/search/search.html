@@ -1,25 +1,50 @@
-
-<br>
-<br>
-
 <div class="container p-4">
-  <h2>Word Search</h2>
+  <h2>Product Search</h2>
 
-  <input 
-    type="text" 
-    [formControl]="searchControl" 
-    placeholder="Type a word..." 
-    class="form-control" 
-  />
+  <div class="search-container position-relative">
+    <input 
+      type="text" 
+      [formControl]="searchControl" 
+      placeholder="Search products..." 
+      class="form-control" 
+    />
+    
+    <!-- Loading indicator -->
+    <div *ngIf="loading" class="position-absolute end-0 top-0 mt-2 me-3">
+      <div class="spinner-border spinner-border-sm text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+    
+    <!-- Clear button -->
+    <button *ngIf="searchControl.value" 
+            (click)="clearSearch()"
+            class="btn btn-sm btn-outline-secondary position-absolute end-0 top-0 mt-2 me-3"
+            style="z-index: 10;">
+      ×
+    </button>
+  </div>
 
+  <!-- Search results -->
   <ul class="list-group mt-3" *ngIf="results.length > 0">
     <li 
-      class="list-group-item" 
+      class="list-group-item search-result-item" 
       *ngFor="let product of results"
-      (mousedown)="selectProduct(product)" 
-      style="cursor: pointer;"
+      (click)="selectProduct(product)" 
     >
-      {{ product.name }}
+      <div class="d-flex align-items-center">
+        <img [src]="product.image" [alt]="product.name" class="search-result-img me-3">
+        <div>
+          <h6 class="mb-1">{{ product.name }}</h6>
+          <p class="text-muted mb-0">₹{{ product.price }}</p>
+          <small class="text-muted">Sizes: {{ product.sizes.join(', ') }}</small>
+        </div>
+      </div>
     </li>
   </ul>
+
+  <!-- No results message -->
+  <div *ngIf="searchControl.value && results.length === 0 && !loading" class="alert alert-info mt-3">
+    No products found for "{{ searchControl.value }}"
+  </div>
 </div>

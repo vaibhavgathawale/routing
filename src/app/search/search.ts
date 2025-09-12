@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
-import { Data } from '../service/data';
 import { Product } from '../models/Product.model';
 import { Productservice } from '../service/productservice';
 import { of } from 'rxjs';
@@ -18,35 +17,55 @@ import { of } from 'rxjs';
 export class Search {
   searchControl = new FormControl('');
   results: Product[] = [];
+  loading: boolean = false;
 
   constructor(
-    private data: Data,
     private productService: Productservice,
     private router: Router
   ) {
+    this.setupSearch();
+  }
+
+  private setupSearch(): void {
     this.searchControl.valueChanges
       .pipe(
         debounceTime(300),
         distinctUntilChanged(),
         switchMap(value => {
           if (value && value.length >= 1) {
-            return this.data.searchWords(value);
+            this.loading = true;
+            return this.productService.searchProducts(value);
           } else {
             this.results = [];
+            this.loading = false;
             return of([]);
           }
         })
       )
       .subscribe({
-        next: (data: Product[]) => (this.results = data),
-        error: (err) => console.error('Error fetching search results:', err)
+        next: (data: Product[]) => {
+          this.results = data;
+          this.loading = false;
+        },
+        error: (err) => {
+          console.error('Error fetching search results:', err);
+          this.loading = false;
+          this.results = [];
+        }
       });
   }
 
   selectProduct(product: Product) {
     this.productService.setSelectedProduct(product);
-    this.results = []; // Clear results after selection
-    this.searchControl.setValue('', { emitEvent: false }); // Clear input without triggering search
+    this.results = [];
+    this.searchControl.setValue('', { emitEvent: false });
+    
+    // Navigate to product detail page
     this.router.navigate(['/product', product.id]);
+  }
+
+  clearSearch(): void {
+    this.searchControl.setValue('');
+    this.results = [];
   }
 }

@@ -218,4 +218,75 @@
     padding: 0.8rem 2rem;
     font-size: 1rem;
   }
+  .cart-container {
+  min-height: 70vh;
+  background: #f8f9fa;
+}
+
+.cart-item {
+  transition: all 0.3s ease;
+}
+
+.cart-item:hover {
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.quantity-controls {
+  background: #fff;
+  border: 2px solid #dee2e6;
+  border-radius: 25px;
+  padding: 5px;
+}
+
+.qty-btn {
+  background: #6c757d;
+  color: white;
+  border: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.qty-btn:hover {
+  background: #495057;
+  transform: scale(1.1);
+}
+
+.qty-value {
+  font-weight: bold;
+  min-width: 30px;
+  text-align: center;
+}
+
+/* Keep all your existing empty cart styles from previous implementation */
+.empty-cart-container {
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.empty-cart-content {
+  text-align: center;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 3rem 2rem;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 2;
+  backdrop-filter: blur(10px);
+  max-width: 500px;
+  width: 100%;
+}
+
 }

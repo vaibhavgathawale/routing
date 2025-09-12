@@ -1,51 +1,61 @@
-import { Component,OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { Productservice } from '../service/productservice';
 import { Product } from '../models/Product.model';
 
-
 @Component({
   selector: 'app-addedcart',
+  standalone: true,
   imports: [CommonModule],
   templateUrl: './addedcart.html',
-  styleUrl: './addedcart.css'
+  styleUrls: ['./addedcart.css']
 })
-export class Addedcart {
-    products: Product[] = [];
-  loading = true;
+export class Addedcart implements OnInit {
+  cartItems: Product[] = [];
   cartCount: number = 0;
+  totalAmount: number = 0;
 
-  constructor(private router: Router,private productService: Productservice) {}
+  constructor(private router: Router, private productService: Productservice) {}
+
+  ngOnInit(): void {
+    this.productService.cartItems$.subscribe(items => {
+      this.cartItems = items;
+      this.calculateTotal();
+    });
+    
+    this.productService.cartCount$.subscribe(count => {
+      this.cartCount = count;
+    });
+  }
+
+  calculateTotal() {
+    this.totalAmount = this.cartItems.reduce((total, item) => {
+      return total + (item.price * item.quantity);
+    }, 0);
+  }
+
+  increaseQuantity(product: Product) {
+    this.productService.updateCartItemQuantity(product.id, product.selectedSize, product.quantity + 1);
+  }
+
+  decreaseQuantity(product: Product) {
+    this.productService.updateCartItemQuantity(product.id, product.selectedSize, product.quantity - 1);
+  }
+
+  removeItem(product: Product) {
+    this.productService.removeFromCart(product.id, product.selectedSize);
+  }
 
   navigateToCarthome() {
     this.router.navigate(['/carthome']);
   }
-  
-  ngOnInit(): void {
-        this.fetchProducts(); // ✅ Call this to load products
 
-    // subscribe to shared products
-    this.productService.products$.subscribe(data => 
-      {
-        this.loading = false;
-        this.products = data});
-    this.productService.cartCount$.subscribe(count => this.cartCount = count);
+  continueShopping() {
+    this.router.navigate(['/carthome']);
   }
 
-  fetchProducts() {
-    this.productService.getProducts().subscribe({
-      next: (data) => {
-        // console.log(data)
-        this.products = data;
-        this.loading = true;
-        this.productService.loadProducts(); // ✅ This triggers the API call
-
-      },
-      error: (err) => {
-        console.error('Failed to fetch products', err);
-        this.loading = false;
-      }
-    });
+  checkout() {
+    alert('Checkout functionality will be implemented soon!');
   }
 }
