@@ -25,8 +25,13 @@ export class Carthome implements OnInit {
   constructor(private productService: Productservice) {}
 
   ngOnInit(): void {
+        this.fetchProducts(); // ✅ Call this to load products
+
     // subscribe to shared products
-    this.productService.products$.subscribe(data => this.products = data);
+    this.productService.products$.subscribe(data => 
+      {
+        this.loading = false;
+        this.products = data});
     this.productService.cartCount$.subscribe(count => this.cartCount = count);
   }
 
@@ -35,7 +40,9 @@ export class Carthome implements OnInit {
       next: (data) => {
         // console.log(data)
         this.products = data;
-        this.loading = false;
+        this.loading = true;
+        this.productService.loadProducts(); // ✅ This triggers the API call
+
       },
       error: (err) => {
         console.error('Failed to fetch products', err);
