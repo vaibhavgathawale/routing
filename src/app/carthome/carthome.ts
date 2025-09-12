@@ -19,19 +19,21 @@ export class Carthome implements OnInit {
 
   products: Product[] = [];
   loading = true;
-    cartCount: number = 0;
+  cartCount: number = 0;
 
 
   constructor(private productService: Productservice) {}
 
   ngOnInit(): void {
-    this.fetchProducts();
+    // subscribe to shared products
+    this.productService.products$.subscribe(data => this.products = data);
+    this.productService.cartCount$.subscribe(count => this.cartCount = count);
   }
 
   fetchProducts() {
     this.productService.getProducts().subscribe({
       next: (data) => {
-        console.log(data)
+        // console.log(data)
         this.products = data;
         this.loading = false;
       },
@@ -51,17 +53,21 @@ export class Carthome implements OnInit {
     if (!product.quantity || product.quantity === 0) {
       product.quantity = 1;
       this.cartCount++;
+      this.productService.updateCartCount(this.cartCount);
     }
   }
   increaseQty(product: Product) {
     product.quantity++;
     this.cartCount++;
+    this.productService.updateCartCount(this.cartCount);
   }
 
   decreaseQty(product: Product) {
     if (product.quantity > 0) {
       product.quantity--;
       this.cartCount--;
+      this.productService.updateCartCount(this.cartCount);
+
     }
   }
 }
