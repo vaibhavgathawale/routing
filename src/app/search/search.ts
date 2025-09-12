@@ -1,47 +1,50 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';   // for *ngIf, *ngFor
-import { FormsModule } from '@angular/forms';     // for [(ngModel)]
-import { FormControl,ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule, FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { Data } from '../service/data';
 import { Product } from '../models/Product.model';
-import { RouterModule } from '@angular/router';
-
-
-
+import { Productservice } from '../service/productservice';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-search',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './search.html',
-  styleUrl: './search.css'
-  
+  styleUrls: ['./search.css']
 })
 export class Search {
- searchControl = new FormControl('');
+  searchControl = new FormControl('');
   results: Product[] = [];
 
-  constructor(private data: Data) {
+  constructor(
+    private data: Data,
+    private productService: Productservice,
+    private router: Router
+  ) {
     this.searchControl.valueChanges
-  .pipe(
-    debounceTime(300),
-    distinctUntilChanged(),
-    switchMap(value => {
-      if (value && value.length >= 1) {
-        return this.data.searchWords(value);
-      } else {
-          this.results = [];
-        return [];
-      }
-    })
-  )
-  .subscribe({
-    next: (data: Product[]) => this.results = data,
-    error: (err) => console.error('Error fetching search results:', err)
-  });
-
-  }
+      .pipe(
+        debounceTime(300),
+        distinctUntilChanged(),
+        switchMap(value => {
+          if (value && value.length >= 1) {
+            return this.data.searchWords(value);
+          } else {
+            this.results = [];
+            return of([]); // ✅ use observable instead of []
+          }
+        })
+      )
+      .subscribe({
+        next: (data: Product[]) => (this.results = data),
+        error: (err) => console.error('Error fetching search results:', err)
+      });
   }
 
+  selectProduct(product: Product) {
+  this.router.navigate(['/product', product.id], { state: { product } });
+}
 
+}

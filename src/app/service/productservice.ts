@@ -3,19 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { Observable ,BehaviorSubject } from 'rxjs';
 import { Product } from '../models/Product.model';
 
-
-
-
-
 @Injectable({
   providedIn: 'root'
-  
 })
 export class Productservice {
 
-    private apiUrl = 'http://localhost:8080/api/products'; // replace with your backend URL
+  private apiUrl = 'http://localhost:8080/api/products'; // replace with your backend URL
 
-    constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {}
 
   private productsSubject = new BehaviorSubject<Product[]>([]);
   products$ = this.productsSubject.asObservable();
@@ -23,7 +18,10 @@ export class Productservice {
   private cartCountSubject = new BehaviorSubject<number>(0);
   cartCount$ = this.cartCountSubject.asObservable();
 
-   /** Load products once */
+  /** cache for selected product (fix for double click) */
+  private selectedProduct: Product | null = null;
+
+  /** Load products once */
   loadProducts(): void {
     this.http.get<Product[]>(this.apiUrl).subscribe({
       next: (data) => this.productsSubject.next(data),
@@ -40,8 +38,26 @@ export class Productservice {
   updateCartCount(count: number): void {
     this.cartCountSubject.next(count);
   }
-  
+
   getProducts(): Observable<Product[]> {
     return this.http.get<Product[]>(this.apiUrl);
+  }
+
+  /** ✅ Fix: set product in memory + subject */
+  setSelectedProduct(product: Product) {
+    this.selectedProduct = product; // cache immediately
+    this.selectedProductSubject.next(product);
+  }
+
+  /** Subject still available if you want async streams */
+  private selectedProductSubject = new BehaviorSubject<Product | null>(null);
+
+  getSelectedProduct(): Observable<Product | null> {
+    return this.selectedProductSubject.asObservable();
+  }
+
+  /** ✅ Instant access — no async race */
+  getCurrentProduct(): Product | null {
+    return this.selectedProduct;
   }
 }

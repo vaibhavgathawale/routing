@@ -2,37 +2,27 @@
 <br>
 <br>
 
-<<div class="container p-4">
+<div class="container p-4">
   <h2>Word Search</h2>
 
-  <input type="text" [formControl]="searchControl" placeholder="Type a word..." class="form-control" />
-
-  @if (results.length > 0) {
-    <ul class="list-group mt-3">
-      @for (product of results; track product.id) {
-        <li class="list-group-item">
-          <a [routerLink]="['/product', product.id]">
-            {{ product.name }}
-          </a>
-        </li>
-      }
-    </ul>
-  }
-</div>
-
-
-<!-- <div class="container p-4">
-  <h2>Word Search</h2>
-
-  <input type="text" [formControl]="searchControl" placeholder="Type a word..." class="form-control" />
+  <input 
+    type="text" 
+    [formControl]="searchControl" 
+    placeholder="Type a word..." 
+    class="form-control" 
+  />
 
   <ul class="list-group mt-3" *ngIf="results.length > 0">
-    <li *ngFor="let product of results" 
-        class="list-group-item">
-
-        <a [routerLink]="['/product', product.id]">{{ product.name }}</a>
+    <li 
+      class="list-group-item" 
+      *ngFor="let product of results"
+      (click)="selectProduct(product); results=[]" 
+      style="cursor: pointer;"
+    >
+      {{ product.name }}
     </li>
   </ul>
-</div> -->
+</div>
+
 
 
