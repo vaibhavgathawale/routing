@@ -43,8 +43,10 @@ export class Search {
       });
   }
 
-  selectProduct(product: Product) {
-  this.router.navigate(['/product', product.id], { state: { product } });
+ selectProduct(product: Product) {
+  this.productService.setSelectedProduct(product);
+  this.router.navigate(['/product', product.id]);
 }
+
 
 }

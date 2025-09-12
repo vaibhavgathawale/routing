@@ -18,27 +18,25 @@ export class ProductDetail implements OnInit {
 
   constructor(private route: ActivatedRoute,
               private data: Data,
-              private router: Router
+              private router: Router,
+              private productService: Productservice
             ) {}
 
   ngOnInit() {
-    // ✅ Access navigation state properly
-    const nav = this.router.getCurrentNavigation();
-    const stateProduct = nav?.extras?.state?.['product'] as Product | undefined;
-
-    if (stateProduct) {
-      this.product = stateProduct;
-      return;
-    }
-
-    // fallback to API
-    this.route.paramMap.subscribe(params => {
-      const id = Number(params.get('id'));
-      if (!isNaN(id) && id > 0) {
-        this.fetchProduct(id);
-      }
-    });
+  const cached = this.productService.getCurrentProduct();
+  if (cached) {
+    this.product = cached;
+    return;
   }
+
+  // fallback to API
+  this.route.paramMap.subscribe(params => {
+    const id = Number(params.get('id'));
+    if (!isNaN(id) && id > 0) {
+      this.fetchProduct(id);
+    }
+  });
+}
   private fetchProduct(id: number) {
     this.data.getProductById(id).subscribe({
       next: (p) => (this.product = p),
