@@ -16,13 +16,10 @@
     <li 
       class="list-group-item" 
       *ngFor="let product of results"
-      (click)="selectProduct(product); results=[]" 
+      (mousedown)="selectProduct(product)" 
       style="cursor: pointer;"
     >
       {{ product.name }}
     </li>
   </ul>
 </div>
-
-
-

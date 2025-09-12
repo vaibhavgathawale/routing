@@ -33,7 +33,7 @@ export class Search {
             return this.data.searchWords(value);
           } else {
             this.results = [];
-            return of([]); // ✅ use observable instead of []
+            return of([]);
           }
         })
       )
@@ -43,10 +43,10 @@ export class Search {
       });
   }
 
- selectProduct(product: Product) {
-  this.productService.setSelectedProduct(product);
-  this.router.navigate(['/product', product.id]);
-}
-
-
+  selectProduct(product: Product) {
+    this.productService.setSelectedProduct(product);
+    this.results = []; // Clear results after selection
+    this.searchControl.setValue('', { emitEvent: false }); // Clear input without triggering search
+    this.router.navigate(['/product', product.id]);
+  }
 }
