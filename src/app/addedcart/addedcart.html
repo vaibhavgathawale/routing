@@ -1,1 +1,38 @@
 <p>addedcart works!</p>
+<div class="empty-cart-container">
+  <div class="empty-cart-content">
+    <!-- Animated empty cart image -->
+    <div class="cart-image">
+      <img src="assets/cart/empty-cart.png" alt="Empty Cart" class="empty-cart-img">
+      <div class="cart-pulse"></div>
+    </div>
+
+    <!-- Message -->
+    <div class="empty-cart-message">
+      <h2 class="message-title">Your cart feels lonely</h2>
+      <p class="message-subtitle">Looks like you haven't added anything to your cart yet</p>
+    </div>
+
+    <!-- Animated shopping elements -->
+    <div class="floating-elements">
+      <div class="floating-item">🛒</div>
+      <div class="floating-item">📦</div>
+      <div class="floating-item">🎁</div>
+    </div>
+
+    <!-- Call to action -->
+    <div class="cta-section">
+      <button class="shop-now-btn" (click)="navigateToCarthome()">
+        <span class="btn-icon">→</span>
+        Start Shopping
+      </button>
+    </div>
+
+    <!-- Decorative elements -->
+    <div class="decorations">
+      <div class="decoration-circle"></div>
+      <div class="decoration-circle"></div>
+      <div class="decoration-circle"></div>
+    </div>
+  </div>
+</div>

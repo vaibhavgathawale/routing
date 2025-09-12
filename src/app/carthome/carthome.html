@@ -5,12 +5,13 @@
   <div class="collapse navbar-collapse">
     <ul class="navbar-nav me-auto"></ul>
     <div class="d-flex align-items-center">
-      <a routerLink="#" class="text-white position-relative me-3">
+      <!-- Changed routerLink to /cart -->
+      <a routerLink="/addedcart" class="text-white position-relative me-3">
         <i class="bi bi-cart4 fs-4"></i>
-       <!-- Cart Count Badge -->
-      <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger cart-badge">
-  {{ cartCount }}
-</span>
+        <!-- Cart Count Badge -->
+        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger cart-badge">
+          {{ cartCount }}
+        </span>
       </a>
     </div>
   </div>
